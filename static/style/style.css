@@ -1,7 +1,15 @@
-.sleepy-rat {
-/*  border: 1px solid black; */
+/* .sleepy-rat {
+    border: 1px solid black;
     position: absolute;
     top: 40%;
     left: 40.5%;
     width: 300px;
+} */
+
+.wacky_mountain {
+/*  border: 1px solid black; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
