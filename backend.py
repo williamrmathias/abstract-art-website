@@ -1,14 +1,17 @@
 import os
+import subprocess
 from flask import Flask, flash, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = os.path.abspath('static/uploads')
+BAT_LOC = os.path.abspath('model_script.bat')
 ALLOWED_EXTENSION = {'png', 'jpg', 'jpeg'}
 
 #absolute_path = os.path.abspath(UPLOAD_FOLDER+filename)
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['BAT_LOC'] = BAT_LOC
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -33,8 +36,11 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('upload_file', name=filename))
+            subprocess.call(app.config['BAT_LOC'])
+            return render_template("return.html")
+            ##return redirect(url_for('upload_file', name=filename))
     return render_template("index.html")
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
